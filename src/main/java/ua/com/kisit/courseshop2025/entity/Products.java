@@ -34,7 +34,7 @@ public class Products {
     private Long id;
     private String name;
     private String description;
-    private BigDecimal price;
+    private BigDecimal price;  // 2222.23
     private String image;
 
     @ManyToOne
