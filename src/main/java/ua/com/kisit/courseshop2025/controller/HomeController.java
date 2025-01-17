@@ -31,4 +31,21 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/delivery")
+    public String DeliveryPage() {
+        return "delivery";
+    }
+
+
+    @GetMapping("/payment")
+    public String PaymentPage() {
+        return "payment";
+    }
+
+
+    @GetMapping("/about-us")
+    public String AboutUsPage(Model model) {
+        return "about-us";
+    }
+
 }

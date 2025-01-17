@@ -13,6 +13,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>course-shop-2025</name>
     <description>course-shop-2025</description>
+    <packaging>jar</packaging>
+
     <url/>
     <licenses>
         <license/>
