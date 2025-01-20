@@ -51,12 +51,14 @@
     <h3> Загальна кількість елементів кошику: ${el}</h3>
 
     <form action="/deleteAllItems" method="post">
-        <button>delete All</button>
+        <button> delete All</button>
     </form>
 
+    <hr>
 
+    <form method="get" action="/order">
 
-
-
+        <button> Перейти на форму підтвердження замовлення </button>
+    </form>
 
 </@p.pages>

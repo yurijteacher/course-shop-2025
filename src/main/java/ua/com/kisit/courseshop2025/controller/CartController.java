@@ -3,14 +3,12 @@ package ua.com.kisit.courseshop2025.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.kisit.courseshop2025.bl.Cart;
-import ua.com.kisit.courseshop2025.bl.ItemCart;
 import ua.com.kisit.courseshop2025.entity.Products;
 
 @Controller
@@ -98,7 +96,5 @@ public class CartController {
 
         return "redirect:/cart";
     }
-
-
 
 }
