@@ -1,5 +1,6 @@
 package ua.com.kisit.courseshop2025.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +27,11 @@ public class Categories {
     private String description;
     private String images;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categories")
     private List<Products> products;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Brands> brands;
 

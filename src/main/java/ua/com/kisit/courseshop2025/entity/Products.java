@@ -1,5 +1,6 @@
 package ua.com.kisit.courseshop2025.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +42,7 @@ public class Products {
     @JoinColumn(name = "category_id")
     private Categories categories;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<ProductsHasOrder> productsHasOrderList;
 

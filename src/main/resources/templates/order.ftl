@@ -2,8 +2,10 @@
 
 <@p.pages>
 
-<h3> Order </h3>
+<h3> Оформлення замовлення </h3>
 
+    <h4> Інформація про користувача </h4>
+    <hr>
     <ul>
         <li>${client.firstName}</li>
         <li>${client.lastName}</li>
@@ -11,7 +13,8 @@
         <li>${client.phone}</li>
     </ul>
 
-
+    <hr>
+    <h4> Дані про обрану продукцію </h4>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -39,16 +42,31 @@
         </tbody>
     </table>
 
-
     <h4> Загальна вартість купівлі: ${totalValue} </h4>
     <h4> Загальна кількість нуменклатурних позицій у кошику: ${el}</h4>
 
 
-    <form>
+    <form method="post" action="/buy">
+
+        <hr>
+    <h4> Вибір способу доставки </h4>
+        <select name="delivery">
+            <option value="1">Самовивіз</option>
+            <option value="2">Нова пошта</option>
+            <option value="3">Доставка кур'єром</option>
+        </select>
+
+    <hr>
+    <h4> Вибір способу оплати </h4>
+        <input type="radio" name="payment" value="1"> Готівка <br>
+        <input type="radio" name="payment" value="2"> Банківська карта <br>
+
+
+    <hr>
+
+
         <button> Підтвердити замовлення </button>
     </form>
-
-
 
 
 </@p.pages>

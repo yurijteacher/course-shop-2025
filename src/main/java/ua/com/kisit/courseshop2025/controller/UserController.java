@@ -1,6 +1,5 @@
 package ua.com.kisit.courseshop2025.controller;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -39,7 +37,6 @@ public class UserController {
     public String getPageRegistration(Model model,
                                       @RequestParam(name = "err", defaultValue = " ") String error
                                       ) {
-
         model.addAttribute("users", new Users());
         model.addAttribute("clients", new Clients());
         model.addAttribute("error", error);
@@ -85,7 +82,6 @@ public class UserController {
                                  @RequestParam(name = "password") String password,
                                  HttpServletRequest request
                                  ){
-
         if(!userService.getUserByUsernameAndPassword(username, password)){
             return "redirect:/registration";
         }
@@ -96,10 +92,6 @@ public class UserController {
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         if(cart != null){ return "redirect:/order"; }
 
-
         return "redirect:/";
     }
-
-
-
 }
