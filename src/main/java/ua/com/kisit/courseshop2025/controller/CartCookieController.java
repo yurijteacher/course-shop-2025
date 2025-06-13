@@ -23,7 +23,8 @@ public class CartCookieController {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping("/cart1")
-    public String getPageCart(Model model, HttpServletRequest request) {
+    public String getPageCart(Model model,
+                              HttpServletRequest request) {
 
         Cart cart = getCartFromCookies(request);
         if (cart == null) {
@@ -54,6 +55,7 @@ public class CartCookieController {
     }
 
     private Cart getCartFromCookies(HttpServletRequest request) {
+
         Cookie[] cookies = request.getCookies();
 
         if (cookies == null) { return null; }

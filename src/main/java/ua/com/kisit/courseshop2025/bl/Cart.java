@@ -5,6 +5,7 @@ import lombok.Setter;
 import ua.com.kisit.courseshop2025.entity.Products;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Setter
@@ -22,38 +23,65 @@ public class Cart {
         sumElInCart = 0;
     }
 
+//    public synchronized void addNewItemToCart(Products product, int quantity) {
+//
+//        boolean logic = true;
+//
+//        for (ItemCart itemCart : cart) {
+//            if (itemCart.getProduct().getId() == product.getId()) {
+//                logic = false;
+//                itemCart.setQuantity(itemCart.getQuantity() + quantity);
+//            }
+//        }
+//
+//        if (logic) cart.add(new ItemCart(product, quantity));
+//    }
+
     public synchronized void addNewItemToCart(Products product, int quantity) {
-
-        boolean logic = true;
-
         for (ItemCart itemCart : cart) {
             if (itemCart.getProduct().getId() == product.getId()) {
-                logic = false;
                 itemCart.setQuantity(itemCart.getQuantity() + quantity);
+                return;
             }
         }
-
-        if (logic) cart.add(new ItemCart(product, quantity));
+        cart.add(new ItemCart(product, quantity)); // Якщо товару не було, додаємо новий
     }
+
+
 
     public synchronized void updateItemInCart(Products product, int quantity) {
 
-        if (quantity <= 0) {
-            for (ItemCart el : cart) {
-                if (el.getProduct().getId() == product.getId()) {
-                    cart.remove(el);
-                    break;
+        Iterator<ItemCart> iterator = cart.iterator();
+
+        while (iterator.hasNext()) {
+            ItemCart itemCart = iterator.next();
+            if (itemCart.getProduct().getId() == product.getId()) {
+                if(quantity<=0){
+                    iterator.remove();
                 }
-            }
-        } else {
-            for (ItemCart itemCart : cart) {
-                if (itemCart.getProduct().getId() == product.getId()) {
+                else {
                     itemCart.setQuantity(quantity);
                 }
             }
         }
-
     }
+
+//        if (quantity <= 0) {
+//            for (ItemCart el : cart) {
+//                if (el.getProduct().getId() == product.getId()) {
+//                    cart.remove(el);
+//                    break;
+//                }
+//            }
+//        } else {
+//            for (ItemCart itemCart : cart) {
+//                if (itemCart.getProduct().getId() == product.getId()) {
+//                    itemCart.setQuantity(quantity);
+//                }
+//            }
+//        }
+
+
 
     public synchronized void deleteItemFromCart(Products product) {
         for (ItemCart el : cart) {
@@ -75,12 +103,11 @@ public class Cart {
     public synchronized double getTotalValue() {
 
         totalValue = 0;
-
         for (ItemCart itemCart : cart) {
             totalValue += itemCart.getQuantity() * itemCart.getProduct().getPrice().doubleValue();
         }
-
         return totalValue;
+        
     }
 
     public synchronized int getSumElInCart() {

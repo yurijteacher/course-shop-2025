@@ -9,10 +9,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 
 
 @Entity
@@ -47,36 +47,13 @@ public class Categories {
 //        this.brands = brands;
 //    }
 //
-//    public List<Brands> getBrands() {
-//        return brands;
+//
+//    public Long getId() {
+//        return id;
 //    }
 //
-//    public void setBrands(List<Brands> brands) {
-//        this.brands = brands;
-//    }
-//
-//    public List<Products> getProducts() {
-//        return products;
-//    }
-//
-//    public void setProducts(List<Products> products) {
-//        this.products = products;
-//    }
-//
-//    public String getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(String images) {
-//        this.images = images;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public void setDescription(String description) {
-//        this.description = description;
+//    public void setId(Long id) {
+//        this.id = id;
 //    }
 //
 //    public String getName() {
@@ -87,11 +64,35 @@ public class Categories {
 //        this.name = name;
 //    }
 //
-//    public Long getId() {
-//        return id;
+//    public String getDescription() {
+//        return description;
 //    }
 //
-//    public void setId(Long id) {
-//        this.id = id;
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public String getImages() {
+//        return images;
+//    }
+//
+//    public void setImages(String images) {
+//        this.images = images;
+//    }
+//
+//    public List<Products> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(List<Products> products) {
+//        this.products = products;
+//    }
+//
+//    public List<Brands> getBrands() {
+//        return brands;
+//    }
+//
+//    public void setBrands(List<Brands> brands) {
+//        this.brands = brands;
 //    }
 }

@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.catalina.User;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.kisit.courseshop2025.bl.Cart;
 import ua.com.kisit.courseshop2025.bl.ItemCart;
-import ua.com.kisit.courseshop2025.entity.Clients;
-import ua.com.kisit.courseshop2025.entity.Delivery;
-import ua.com.kisit.courseshop2025.entity.Orders;
-import ua.com.kisit.courseshop2025.entity.Payment;
+import ua.com.kisit.courseshop2025.entity.*;
+import ua.com.kisit.courseshop2025.repository.UserRepository;
 import ua.com.kisit.courseshop2025.service.ClientsService;
 import ua.com.kisit.courseshop2025.service.OrderService;
 import ua.com.kisit.courseshop2025.service.ProductHasOrderService;
@@ -29,11 +29,13 @@ public class OrderController {
     private final ClientsService clientsService;
     private final ProductHasOrderService productHasOrderService;
     private final OrderService orderService;
+    private final UserRepository userRepository;
 
-    public OrderController(ClientsService clientsService, ProductHasOrderService productHasOrderService, OrderService orderService) {
+    public OrderController(ClientsService clientsService, ProductHasOrderService productHasOrderService, OrderService orderService, UserRepository userRepository) {
         this.clientsService = clientsService;
         this.productHasOrderService = productHasOrderService;
         this.orderService = orderService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/order")
@@ -43,7 +45,11 @@ public class OrderController {
 
 
         HttpSession session = request.getSession();
-        Object user = session.getAttribute("user");
+//        Object user = session.getAttribute("user");
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Users user = (Users) context.getAuthentication().getPrincipal();
+
 
         if (user == null) {
             return "redirect:/login";
@@ -58,7 +64,11 @@ public class OrderController {
         model.addAttribute("cart", cart.getCart());
         model.addAttribute("totalValue", cart.getTotalValue());
         model.addAttribute("el", cart.getSumElInCart());
-        model.addAttribute("client", clientsService.findById((Long) user));
+
+
+         Users user1 = userRepository.findByUsername(user.getUsername());
+
+        model.addAttribute("client", clientsService.findById(user1.getId()));
 
         return "order";
     }
@@ -74,7 +84,11 @@ public class OrderController {
 
         HttpSession session = request.getSession();
 
-        Object user = session.getAttribute("user");
+//        Object user = session.getAttribute("user");
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        Users user = (Users) context.getAuthentication().getPrincipal();
+
         if (user == null) {
             return "redirect:/login";
         }
@@ -83,8 +97,8 @@ public class OrderController {
         if (cart == null) {
             return "redirect:/";
         }
-
-        Clients client = clientsService.findById((Long) user);
+        Users user1 = userRepository.findByUsername(user.getUsername());
+        Clients client = clientsService.findById(user1.getId());
 
         Orders order = new Orders();
         order.setDelivery(delivery);

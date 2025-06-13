@@ -3,6 +3,7 @@ package ua.com.kisit.courseshop2025.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.kisit.courseshop2025.bl.Cart;
 import ua.com.kisit.courseshop2025.entity.Clients;
+import ua.com.kisit.courseshop2025.entity.Roles;
 import ua.com.kisit.courseshop2025.entity.Users;
 import ua.com.kisit.courseshop2025.service.ClientsService;
 import ua.com.kisit.courseshop2025.service.UserService;
+
+import java.util.Collections;
 
 @Controller
 public class UserController {
@@ -64,34 +68,43 @@ public class UserController {
         }
 
         if(userService.getUserByUsername(users.getUsername())){
-            redirectAttributes.addAttribute("err", "Користувач існує у системі!!");
+            redirectAttributes.addAttribute("err",
+                    "Користувач існує у системі!!");
             return "/registration";
         }
 
+        users.setPassword(new BCryptPasswordEncoder().encode(users.getPassword()));
         Users user = userService.saveNewUserToDB(users);
-
         clients.setUser(user);
+        user.setRoleset(Collections.singleton(new Roles(1L, "ROLE_USER")));
+
         clientsService.saveNewClients(clients);
 
         return "redirect:/login";
     }
 
 
-    @PostMapping("/login")
-    public String authUserInShop(@RequestParam(name = "username") String username,
-                                 @RequestParam(name = "password") String password,
-                                 HttpServletRequest request
-                                 ){
-        if(!userService.getUserByUsernameAndPassword(username, password)){
-            return "redirect:/registration";
-        }
+    //    @PostMapping("/login")
+    //    public String authUserInShop(@RequestParam(name = "username") String username,
+    //                                 @RequestParam(name = "password") String password,
+    //                                 HttpServletRequest request
+    //                                 ){
+    //        if(!userService.getUserByUsernameAndPassword(username, password)){
+    //            return "redirect:/registration";
+//        }
+//
+//        HttpSession session = request.getSession();
+//        session.setAttribute("user", userService.findByUsername(username).getId());
+//
+//        Cart cart = (Cart) request.getSession().getAttribute("cart");
+//        if(cart != null){ return "redirect:/order"; }
+//
+//        return "redirect:/";
+//    }
 
-        HttpSession session = request.getSession();
-        session.setAttribute("user", userService.findByUsername(username).getId());
 
-        Cart cart = (Cart) request.getSession().getAttribute("cart");
-        if(cart != null){ return "redirect:/order"; }
-
-        return "redirect:/";
+    @GetMapping("/403")
+    public String get403() {
+        return "e403";
     }
 }

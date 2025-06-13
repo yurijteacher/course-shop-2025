@@ -9,11 +9,15 @@ import ua.com.kisit.courseshop2025.entity.Products;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 
 public class ItemCart {
 
     private Products product;
     private int quantity;
 
+    public ItemCart(Products product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+    }
 }

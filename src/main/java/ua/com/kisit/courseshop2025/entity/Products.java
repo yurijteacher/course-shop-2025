@@ -36,6 +36,7 @@ public class Products {
     private String name;
     private String description;
     private BigDecimal price;  // 2222.23
+    @Column(name = "image")
     private String image;
 
     @ManyToOne

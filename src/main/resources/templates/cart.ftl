@@ -26,7 +26,7 @@
                     </td>
                     <form method="post" action="/updateItemInCart">
                         <td><input type="number" name="quantity" value="${item.quantity}" min="0" max="100" step="1"/> </td>
-                        <td>${item.product.price}</td>
+                        <td>${item.product.price?c}</td>
                         <td>${item.product.price * item.quantity}</td>
                         <td>
                             <input type="hidden" name="id" value="${item.product.id}">
@@ -47,8 +47,8 @@
     </table>
 
 
-    <h3> Вартість покупки:  ${totalValue} </h3>
-    <h3> Загальна кількість елементів кошику: ${el}</h3>
+    <h3> Вартість покупки:  ${totalValue?c} </h3>
+    <h3> Загальна кількість елементів кошику: ${el?c}</h3>
 
     <form action="/deleteAllItems" method="post">
         <button> delete All</button>

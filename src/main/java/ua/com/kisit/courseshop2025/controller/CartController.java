@@ -1,6 +1,5 @@
 package ua.com.kisit.courseshop2025.controller;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -18,18 +17,13 @@ public class CartController {
     public String cart(
             Model model,
             HttpServletRequest request) {
-
         HttpSession session = request.getSession();
-
         // setAttribute("name", obj);
         // getAtrribute("name")
-
         Cart cart = (Cart) session.getAttribute("cart");
-
         if (cart == null) {
             cart = new Cart();
         }
-
         model.addAttribute("cart", cart.getCart());
         model.addAttribute("totalValue", cart.getTotalValue());
         model.addAttribute("el", cart.getSumElInCart());
@@ -39,7 +33,8 @@ public class CartController {
 
 
     @PostMapping("/addToCart")
-    public String addNewItemToCart(@RequestParam(name = "id") Products product, @RequestParam(name = "quantity") int quantity,
+    public String addNewItemToCart(@RequestParam(name = "id") Products product,
+                                   @RequestParam(name = "quantity") int quantity,
                                    HttpServletRequest request
     ) {
 
@@ -48,7 +43,6 @@ public class CartController {
         if (cart == null) cart = new Cart();
         cart.addNewItemToCart(product, quantity);
         session.setAttribute("cart", cart);
-
         return "redirect:/cart";
     }
 

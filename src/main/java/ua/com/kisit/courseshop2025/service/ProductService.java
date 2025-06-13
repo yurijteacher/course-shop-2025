@@ -21,4 +21,24 @@ public class ProductService {
         return productRepository.findByCategories(category);
     }
 
+    public void save(Products products) {
+        productRepository.save(products);
+    }
+
+    public Products findById(Products product) {
+        return productRepository.findById(product.getId()).orElse(null);
+    }
+
+    public List<Products> findAll() {
+        return productRepository.findAll();
+    }
+
+    public void delete(Products product) {
+        productRepository.deleteById(product.getId());
+    }
+
+    public void deleteAll() {
+        productRepository.deleteAll();
+    }
+
 }
